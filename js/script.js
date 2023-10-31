@@ -1056,17 +1056,120 @@
 
 	});
 
+	// document.addEventListener("DOMContentLoaded", function () {
+	// 	const rateThumbs = document.querySelectorAll(".rate_thumb");
+	  
+	// 	// Sprawdź, czy użytkownik oddał już głos przy wczytaniu strony
+	// 	const userId = getUserId(); // Funkcja do uzyskania unikalnego identyfikatora użytkownika
+	// 	const hasUserVoted = hasUserAlreadyVoted(userId);
+	  
+	// 	if (hasUserVoted) {
+	// 	  // Jeśli użytkownik już oddał głos, pokaż komunikat od razu
+	// 	  const votedMessage = document.getElementById("votedMessage");
+	// 	  votedMessage.style.display = "block";
+	// 	}
+	  
+	// 	rateThumbs.forEach(function (thumb, index) {
+	// 	  thumb.addEventListener("click", function () {
+	// 		const rateDiv = thumb.closest(".rate");
+	// 		const rateNumber = rateDiv.querySelector(".rate_number");
+	// 		const thumbsUpIcon = thumb.querySelector("i.fa.fa-thumbs-up");
+	  
+	// 		// Sprawdź, czy użytkownik oddał już głos
+	// 		const hasUserVoted = hasUserAlreadyVoted(userId);
+	  
+	// 		if (!hasUserVoted) {
+	// 		  // Jeśli użytkownik nie oddał jeszcze głosu, zezwól na oddanie
+	// 		  rateNumber.textContent = parseInt(rateNumber.textContent, 10) + 1;
+	// 		  thumbsUpIcon.style.color = "#2ed3ae";
+	// 		  thumbsUpIcon.classList.remove("fa-thumbs-up");
+	// 		  thumbsUpIcon.classList.add("fa-thumbs-up");
+	  
+	// 		  // Zaznacz, że użytkownik oddał głos w Local Storage
+	// 		  markUserAsVoted(userId);
+	  
+	// 		  // Pokaż komunikat dla użytkownika
+	// 		  const votedMessage = document.getElementById("votedMessage");
+	// 		  votedMessage.style.display = "block";
+	  
+	// 		  // Zapisz dane w Local Storage używając indeksu jako klucza
+	// 		  const dataToStore = {
+	// 			rateNumber: rateNumber.textContent,
+	// 			thumbsUpColor: thumbsUpIcon.style.color
+	// 		  };
+	// 		  localStorage.setItem(`rate_data_${index}`, JSON.stringify(dataToStore));
+	// 		}
+	// 	  });
+	// 	});
+	  
+	// 	// Odczytaj dane z Local Storage i ustaw dla każdego diva
+	// 	const rateDivs = document.querySelectorAll(".rate");
+	// 	rateDivs.forEach(function (rateDiv, index) {
+	// 	  const data = localStorage.getItem(`rate_data_${index}`);
+	// 	  if (data) {
+	// 		const parsedData = JSON.parse(data);
+	// 		const rateNumber = rateDiv.querySelector(".rate_number");
+	// 		const thumbsUpIconExisting = rateDiv.querySelector("i.fa-thumbs-up");
+	  
+	// 		rateNumber.textContent = parsedData.rateNumber;
+	// 		if (thumbsUpIconExisting) {
+	// 		  thumbsUpIconExisting.style.color = parsedData.thumbsUpColor;
+	// 		}
+	// 	  }
+	// 	});
+	//   });
+	  
+	//   // Funkcja do uzyskania unikalnego identyfikatora użytkownika (np. na podstawie ciasteczek)
+	//   function getUserId() {
+	// 	// Tutaj możesz implementować logikę uzyskiwania unikalnego identyfikatora użytkownika
+	// 	// Na przykład, można wykorzystać ciasteczka lub generować losowy identyfikator
+	// 	return "user_id_example"; // Przykład, zastąp odpowiednią logiką
+	//   }
+	  
+	//   // Funkcja sprawdzająca, czy użytkownik oddał już głos
+	//   function hasUserAlreadyVoted(userId) {
+	// 	// Odczytaj informacje z Local Storage, czy użytkownik o danym identyfikatorze już oddał głos
+	// 	const hasVoted = localStorage.getItem(`user_vote_${userId}`);
+	// 	return hasVoted === "true";
+	//   }
+	  
+	//   // Funkcja oznaczająca użytkownika jako oddającego głos
+	//   function markUserAsVoted(userId) {
+	// 	// Zapisz informację w Local Storage, że użytkownik o danym identyfikatorze oddał głos
+	// 	localStorage.setItem(`user_vote_${userId}`, "true");
+	//   }
+
 	document.addEventListener("DOMContentLoaded", function () {
 		const rateThumbs = document.querySelectorAll(".rate_thumb");
 	  
-		// Sprawdź, czy użytkownik oddał już głos przy wczytaniu strony
-		const userId = getUserId(); // Funkcja do uzyskania unikalnego identyfikatora użytkownika
-		const hasUserVoted = hasUserAlreadyVoted(userId);
+		// Funkcja do uzyskania unikalnego identyfikatora użytkownika
+		function getUserId() {
+		  // Tutaj możesz implementować logikę uzyskiwania unikalnego identyfikatora użytkownika
+		  // Na przykład, można wykorzystać ciasteczka lub generować losowy identyfikator
+		  return "user_id_example"; // Przykład, zastąp odpowiednią logiką
+		}
 	  
-		if (hasUserVoted) {
-		  // Jeśli użytkownik już oddał głos, pokaż komunikat od razu
-		  const votedMessage = document.getElementById("votedMessage");
-		  votedMessage.style.display = "block";
+		// Funkcja do oznaczania użytkownika jako oddającego głos
+		function markUserAsVoted(userId) {
+		  // Zapisz informację w Local Storage, że użytkownik o danym identyfikatorze oddał głos
+		  localStorage.setItem(`user_vote_${userId}`, "true");
+		}
+	  
+		// Funkcja do uzyskiwania ogólnej liczby oddanych głosów dla danego diva
+		function getTotalVotes(divIndex) {
+		  const totalVotes = localStorage.getItem(`total_votes_${divIndex}`);
+		  return totalVotes ? parseInt(totalVotes, 10) : 0;
+		}
+	  
+		// Funkcja do zaktualizowania ogólnej liczby oddanych głosów dla danego diva
+		function updateTotalVotes(divIndex, newTotal) {
+		  localStorage.setItem(`total_votes_${divIndex}`, newTotal.toString());
+		}
+	  
+		// Funkcja do sprawdzania, czy użytkownik oddał już głos
+		function hasUserAlreadyVoted(userId) {
+		  const hasVoted = localStorage.getItem(`user_vote_${userId}`);
+		  return hasVoted === "true";
 		}
 	  
 		rateThumbs.forEach(function (thumb, index) {
@@ -1076,16 +1179,23 @@
 			const thumbsUpIcon = thumb.querySelector("i.fa.fa-thumbs-up");
 	  
 			// Sprawdź, czy użytkownik oddał już głos
+			const userId = getUserId();
 			const hasUserVoted = hasUserAlreadyVoted(userId);
 	  
 			if (!hasUserVoted) {
 			  // Jeśli użytkownik nie oddał jeszcze głosu, zezwól na oddanie
+			  const divIndex = index;
+			  const totalVotes = getTotalVotes(divIndex);
+	  
 			  rateNumber.textContent = parseInt(rateNumber.textContent, 10) + 1;
 			  thumbsUpIcon.style.color = "#2ed3ae";
 			  thumbsUpIcon.classList.remove("fa-thumbs-up");
 			  thumbsUpIcon.classList.add("fa-thumbs-up");
 	  
-			  // Zaznacz, że użytkownik oddał głos w Local Storage
+			  // Zaktualizuj ogólną liczbę oddanych głosów
+			  updateTotalVotes(divIndex, totalVotes + 1);
+	  
+			  // Zaznacz, że użytkownik oddał głos
 			  markUserAsVoted(userId);
 	  
 			  // Pokaż komunikat dla użytkownika
@@ -1109,54 +1219,17 @@
 		  if (data) {
 			const parsedData = JSON.parse(data);
 			const rateNumber = rateDiv.querySelector(".rate_number");
-			const thumbsUpIconExisting = rateDiv.querySelector("i.fa-thumbs-up");
+			const thumbsUpIconExisting = rateDiv.querySelector("i.fa.fa-thumbs-up");
 	  
 			rateNumber.textContent = parsedData.rateNumber;
 			if (thumbsUpIconExisting) {
 			  thumbsUpIconExisting.style.color = parsedData.thumbsUpColor;
 			}
+	  
+			// Odczytaj ogólną liczbę oddanych głosów i ustaw ją w rate_number
+			const totalVotes = getTotalVotes(index);
+			rateDiv.querySelector(".rate_number").textContent = totalVotes.toString();
 		  }
 		});
 	  });
-	  
-	  // Funkcja do uzyskania unikalnego identyfikatora użytkownika (np. na podstawie ciasteczek)
-	  function getUserId() {
-		// Tutaj możesz implementować logikę uzyskiwania unikalnego identyfikatora użytkownika
-		// Na przykład, można wykorzystać ciasteczka lub generować losowy identyfikator
-		return "user_id_example"; // Przykład, zastąp odpowiednią logiką
-	  }
-	  
-	  // Funkcja sprawdzająca, czy użytkownik oddał już głos
-	  function hasUserAlreadyVoted(userId) {
-		// Odczytaj informacje z Local Storage, czy użytkownik o danym identyfikatorze już oddał głos
-		const hasVoted = localStorage.getItem(`user_vote_${userId}`);
-		return hasVoted === "true";
-	  }
-	  
-	  // Funkcja oznaczająca użytkownika jako oddającego głos
-	  function markUserAsVoted(userId) {
-		// Zapisz informację w Local Storage, że użytkownik o danym identyfikatorze oddał głos
-		localStorage.setItem(`user_vote_${userId}`, "true");
-	  }
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	  
-	
-	
-	
-	
-
 }());
