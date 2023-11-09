@@ -1233,3 +1233,187 @@
 		});
 	  });
 }());
+
+
+// Wysyłanie nowej karty
+
+document.addEventListener('DOMContentLoaded', function () {
+	var form = document.getElementById('sendNewCard');
+  
+	form.addEventListener('submit', function (event) {
+	  event.preventDefault();
+  
+	  var cardName = document.getElementById('card_name').value;
+	  var cardPhotoInput = document.getElementById('card_photo');
+	  var cardPhoto = cardPhotoInput.files[0];
+  
+	  var formData = new FormData();
+	  formData.append('card_name', cardName);
+	  formData.append('card_photo', cardPhoto);
+  
+	  console.log('Dane do wysłania:', formData);
+  
+	  // Utworzenie obiektu żądania
+	  fetch(form.action, {
+		method: 'POST',
+		body: formData,
+	  })
+		.then(function (response) {
+		  console.log('Odpowiedź serwera:', response);
+		  if (!response.ok) {
+			throw new Error('Wystąpił błąd podczas wysyłania danych');
+		  }
+		  return response.json();
+		})
+		.then(function (data) {
+		  console.log('Dane zostały wysłane pomyślnie');
+		  console.log('Odpowiedź serwera (JSON):', data);
+		})
+		.catch(function (error) {
+		  console.error('Błąd:', error.message);
+		});
+	});
+  });
+
+//add: 		http://capslo-001-site1.atempurl.com/Photo/Add
+//getall: 	http://capslo-001-site1.atempurl.com/Photo/GetAll
+//vote: 	http://capslo-001-site1.atempurl.com/Photo/Vote
+
+  //Pobieranie wszystkich kard
+
+//   document.addEventListener('DOMContentLoaded', function () {
+//   var allCardsWrapper = document.getElementById('allCardsWrapper');
+
+//   // Pobranie danych z endpointa
+//   fetch('http://capslo-001-site1.atempurl.com/Photo/GetAll')
+//     .then(function (response) {
+//       if (!response.ok) {
+//         throw new Error('Błąd podczas pobierania danych');
+//       }
+//       return response.json();
+//     })
+//     .then(function (data) {
+//       // Pętla po pobranych danych i dodawanie do #allCardsWrapper
+//       data.forEach(function (card) {
+//         var cardDiv = document.createElement('div');
+//         cardDiv.className = 'col-md-4 col-xl-3';
+
+//         var cardLink = document.createElement('a');
+//         cardLink.className = 'thumb-modern';
+//         cardLink.setAttribute('data-lightgallery', 'item');
+//         cardLink.href = '';  // Tutaj podstaw link do oryginalnego obrazu
+
+//         var figure = document.createElement('figure');
+
+//         var img = document.createElement('img');
+//         img.src = card.photoUrl;  // Tutaj podstaw link do zdjęcia
+//         img.alt = '';
+//         img.width = 472;
+//         img.height = 355;
+
+//         var overlay = document.createElement('div');
+//         overlay.className = 'thumb-modern__overlay';
+
+//         figure.appendChild(img);
+//         cardLink.appendChild(figure);
+//         cardLink.appendChild(overlay);
+
+//         var rateDiv = document.createElement('div');
+//         rateDiv.className = 'rate';
+
+//         var rateNumber = document.createElement('div');
+//         rateNumber.className = 'rate_number';
+//         rateNumber.textContent = card.rating;  // Tutaj podstaw ocenę z danych
+
+//         var rateThumb = document.createElement('div');
+//         rateThumb.className = 'rate_thumb';
+
+//         var thumbsUpIcon = document.createElement('i');
+//         thumbsUpIcon.className = 'fa fa-thumbs-up';
+//         thumbsUpIcon.setAttribute('aria-hidden', 'true');
+
+//         rateThumb.appendChild(thumbsUpIcon);
+
+//         rateDiv.appendChild(rateNumber);
+//         rateDiv.appendChild(rateThumb);
+
+//         cardDiv.appendChild(cardLink);
+//         cardDiv.appendChild(rateDiv);
+
+//         // Dodanie elementu do #allCardsWrapper
+//         allCardsWrapper.appendChild(cardDiv);
+//       });
+//     })
+//     .catch(function (error) {
+//       console.error('Błąd:', error.message);
+//     });
+// });
+
+// document.addEventListener('DOMContentLoaded', function () {
+// 	var allCardsWrapper = document.getElementById('allCardsWrapper');
+  
+// 	fetch('https://randomuser.me/api/0.8/?results=10')
+// 	  .then(function (response) {
+// 		if (!response.ok) {
+// 		  throw new Error('Błąd podczas pobierania danych');
+// 		}
+// 		return response.json();
+// 	  })
+// 	  .then(function (data) {
+// 		// Pętla po pobranych danych i dodawanie do #allCardsWrapper
+// 		data.results.forEach(function (result) {
+// 		  var user = result.user;
+  
+// 		  var cardDiv = document.createElement('div');
+// 		  cardDiv.className = 'col-md-4 col-xl-3';
+  
+// 		  var cardLink = document.createElement('a');
+// 		  cardLink.className = 'thumb-modern';
+// 		  cardLink.setAttribute('data-lightgallery', 'item');
+// 		  cardLink.href = user.picture.large;
+  
+// 		  var figure = document.createElement('figure');
+  
+// 		  var img = document.createElement('img');
+// 		  img.src = user.picture.large;
+// 		  img.alt = '';
+// 		  img.width = 472;
+// 		  img.height = 355;
+  
+// 		  var overlay = document.createElement('div');
+// 		  overlay.className = 'thumb-modern__overlay';
+  
+// 		  figure.appendChild(img);
+// 		  cardLink.appendChild(figure);
+// 		  cardLink.appendChild(overlay);
+  
+// 		  var rateDiv = document.createElement('div');
+// 		  rateDiv.className = 'rate';
+  
+// 		  var rateNumber = document.createElement('div');
+// 		  rateNumber.className = 'rate_number';
+// 		  rateNumber.textContent = user.username;
+  
+// 		  var rateThumb = document.createElement('div');
+// 		  rateThumb.className = 'rate_thumb';
+  
+// 		  var thumbsUpIcon = document.createElement('i');
+// 		  thumbsUpIcon.className = 'fa fa-thumbs-up';
+// 		  thumbsUpIcon.setAttribute('aria-hidden', 'true');
+  
+// 		  rateThumb.appendChild(thumbsUpIcon);
+  
+// 		  rateDiv.appendChild(rateNumber);
+// 		  rateDiv.appendChild(rateThumb);
+  
+// 		  cardDiv.appendChild(cardLink);
+// 		  cardDiv.appendChild(rateDiv);
+  
+// 		  // Dodanie elementu do #allCardsWrapper
+// 		  allCardsWrapper.appendChild(cardDiv);
+// 		});
+// 	  })
+// 	  .catch(function (error) {
+// 		console.error('Błąd:', error.message);
+// 	  });
+//   });

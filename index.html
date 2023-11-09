@@ -44,6 +44,7 @@
                   <li class="active"><a href="#home">Home</a></li>
                   <li><a href="#thanks">Życzenia</a></li>
                   <li><a href="#cards">Galeria prac</a></li>
+                  <li><a href="#addCards">Dodaj Kartkę</a></li>
                   <!-- <li><a href="contacts.html">Contacts</a></li> -->
                 </ul>
               </div>
@@ -83,6 +84,25 @@
           </div>
         </div>
       </section> -->
+      <section id="addCards" class="section-lg text-center">
+        <div class="container">
+          <h3>Dodaj kartkę</h3>
+          <form id="sendNewCard" class="rd-mailform rd-mailform_style-1" data-form-output="form-output-global" data-form-type="card" method="post" action="https://hook.eu1.make.com/thi3ge8ob4xn3n7bgd3j7f5wptx6ac7q">
+
+            <div class="form-wrap">
+              <input class="form-input" id="card_name" type="text" name="card_name" required>
+              <label class="form-label" for="card_name">nazwa</label>
+            </div>
+
+            <div class="form-wrap">
+              <input  class="form-input" id="card_photo" type="file" name="card_photo" required>
+              <label  class="form-label" for="card_photo"></label>
+            </div>
+          
+            <button class="button button-primary" type="submit">Wyślij</button>
+          </form>
+        </div>
+      </section>
       <section id="thanks" class="section-lg bg-gray-lighter text-center">
         <div class="container">
           <h3>Pełnych ciepła, spokoju i radości Świąt Bożego Narodzenia oraz pomyślności
@@ -121,7 +141,7 @@
               </div>
           </div>      
           <h3>Kartki Świąteczne</h3>
-          <div class="row row-10 row-horizontal-10">
+          <div id="allCardsWrapper" class="row row-10 row-horizontal-10">
             <div class="col-md-4 col-xl-3">
               <a class="thumb-modern" data-lightgallery="item" href="images/card_1.jpg">
                 <figure id="cards">
