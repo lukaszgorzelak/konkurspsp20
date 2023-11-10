@@ -1059,14 +1059,34 @@
 	// document.addEventListener("DOMContentLoaded", function () {
 	// 	const rateThumbs = document.querySelectorAll(".rate_thumb");
 	  
-	// 	// Sprawdź, czy użytkownik oddał już głos przy wczytaniu strony
-	// 	const userId = getUserId(); // Funkcja do uzyskania unikalnego identyfikatora użytkownika
-	// 	const hasUserVoted = hasUserAlreadyVoted(userId);
+	// 	// Funkcja do uzyskania unikalnego identyfikatora użytkownika
+	// 	function getUserId() {
+	// 	  // Tutaj możesz implementować logikę uzyskiwania unikalnego identyfikatora użytkownika
+	// 	  // Na przykład, można wykorzystać ciasteczka lub generować losowy identyfikator
+	// 	  return "user_id_example"; // Przykład, zastąp odpowiednią logiką
+	// 	}
 	  
-	// 	if (hasUserVoted) {
-	// 	  // Jeśli użytkownik już oddał głos, pokaż komunikat od razu
-	// 	  const votedMessage = document.getElementById("votedMessage");
-	// 	  votedMessage.style.display = "block";
+	// 	// Funkcja do oznaczania użytkownika jako oddającego głos
+	// 	function markUserAsVoted(userId) {
+	// 	  // Zapisz informację w Local Storage, że użytkownik o danym identyfikatorze oddał głos
+	// 	  localStorage.setItem(`user_vote_${userId}`, "true");
+	// 	}
+	  
+	// 	// Funkcja do uzyskiwania ogólnej liczby oddanych głosów dla danego diva
+	// 	function getTotalVotes(divIndex) {
+	// 	  const totalVotes = localStorage.getItem(`total_votes_${divIndex}`);
+	// 	  return totalVotes ? parseInt(totalVotes, 10) : 0;
+	// 	}
+	  
+	// 	// Funkcja do zaktualizowania ogólnej liczby oddanych głosów dla danego diva
+	// 	function updateTotalVotes(divIndex, newTotal) {
+	// 	  localStorage.setItem(`total_votes_${divIndex}`, newTotal.toString());
+	// 	}
+	  
+	// 	// Funkcja do sprawdzania, czy użytkownik oddał już głos
+	// 	function hasUserAlreadyVoted(userId) {
+	// 	  const hasVoted = localStorage.getItem(`user_vote_${userId}`);
+	// 	  return hasVoted === "true";
 	// 	}
 	  
 	// 	rateThumbs.forEach(function (thumb, index) {
@@ -1076,16 +1096,23 @@
 	// 		const thumbsUpIcon = thumb.querySelector("i.fa.fa-thumbs-up");
 	  
 	// 		// Sprawdź, czy użytkownik oddał już głos
+	// 		const userId = getUserId();
 	// 		const hasUserVoted = hasUserAlreadyVoted(userId);
 	  
 	// 		if (!hasUserVoted) {
 	// 		  // Jeśli użytkownik nie oddał jeszcze głosu, zezwól na oddanie
+	// 		  const divIndex = index;
+	// 		  const totalVotes = getTotalVotes(divIndex);
+	  
 	// 		  rateNumber.textContent = parseInt(rateNumber.textContent, 10) + 1;
 	// 		  thumbsUpIcon.style.color = "#2ed3ae";
 	// 		  thumbsUpIcon.classList.remove("fa-thumbs-up");
 	// 		  thumbsUpIcon.classList.add("fa-thumbs-up");
 	  
-	// 		  // Zaznacz, że użytkownik oddał głos w Local Storage
+	// 		  // Zaktualizuj ogólną liczbę oddanych głosów
+	// 		  updateTotalVotes(divIndex, totalVotes + 1);
+	  
+	// 		  // Zaznacz, że użytkownik oddał głos
 	// 		  markUserAsVoted(userId);
 	  
 	// 		  // Pokaż komunikat dla użytkownika
@@ -1109,160 +1136,58 @@
 	// 	  if (data) {
 	// 		const parsedData = JSON.parse(data);
 	// 		const rateNumber = rateDiv.querySelector(".rate_number");
-	// 		const thumbsUpIconExisting = rateDiv.querySelector("i.fa-thumbs-up");
+	// 		const thumbsUpIconExisting = rateDiv.querySelector("i.fa.fa-thumbs-up");
 	  
 	// 		rateNumber.textContent = parsedData.rateNumber;
 	// 		if (thumbsUpIconExisting) {
 	// 		  thumbsUpIconExisting.style.color = parsedData.thumbsUpColor;
 	// 		}
+	  
+	// 		// Odczytaj ogólną liczbę oddanych głosów i ustaw ją w rate_number
+	// 		const totalVotes = getTotalVotes(index);
+	// 		rateDiv.querySelector(".rate_number").textContent = totalVotes.toString();
 	// 	  }
 	// 	});
 	//   });
-	  
-	//   // Funkcja do uzyskania unikalnego identyfikatora użytkownika (np. na podstawie ciasteczek)
-	//   function getUserId() {
-	// 	// Tutaj możesz implementować logikę uzyskiwania unikalnego identyfikatora użytkownika
-	// 	// Na przykład, można wykorzystać ciasteczka lub generować losowy identyfikator
-	// 	return "user_id_example"; // Przykład, zastąp odpowiednią logiką
-	//   }
-	  
-	//   // Funkcja sprawdzająca, czy użytkownik oddał już głos
-	//   function hasUserAlreadyVoted(userId) {
-	// 	// Odczytaj informacje z Local Storage, czy użytkownik o danym identyfikatorze już oddał głos
-	// 	const hasVoted = localStorage.getItem(`user_vote_${userId}`);
-	// 	return hasVoted === "true";
-	//   }
-	  
-	//   // Funkcja oznaczająca użytkownika jako oddającego głos
-	//   function markUserAsVoted(userId) {
-	// 	// Zapisz informację w Local Storage, że użytkownik o danym identyfikatorze oddał głos
-	// 	localStorage.setItem(`user_vote_${userId}`, "true");
-	//   }
-
-	document.addEventListener("DOMContentLoaded", function () {
-		const rateThumbs = document.querySelectorAll(".rate_thumb");
-	  
-		// Funkcja do uzyskania unikalnego identyfikatora użytkownika
-		function getUserId() {
-		  // Tutaj możesz implementować logikę uzyskiwania unikalnego identyfikatora użytkownika
-		  // Na przykład, można wykorzystać ciasteczka lub generować losowy identyfikator
-		  return "user_id_example"; // Przykład, zastąp odpowiednią logiką
-		}
-	  
-		// Funkcja do oznaczania użytkownika jako oddającego głos
-		function markUserAsVoted(userId) {
-		  // Zapisz informację w Local Storage, że użytkownik o danym identyfikatorze oddał głos
-		  localStorage.setItem(`user_vote_${userId}`, "true");
-		}
-	  
-		// Funkcja do uzyskiwania ogólnej liczby oddanych głosów dla danego diva
-		function getTotalVotes(divIndex) {
-		  const totalVotes = localStorage.getItem(`total_votes_${divIndex}`);
-		  return totalVotes ? parseInt(totalVotes, 10) : 0;
-		}
-	  
-		// Funkcja do zaktualizowania ogólnej liczby oddanych głosów dla danego diva
-		function updateTotalVotes(divIndex, newTotal) {
-		  localStorage.setItem(`total_votes_${divIndex}`, newTotal.toString());
-		}
-	  
-		// Funkcja do sprawdzania, czy użytkownik oddał już głos
-		function hasUserAlreadyVoted(userId) {
-		  const hasVoted = localStorage.getItem(`user_vote_${userId}`);
-		  return hasVoted === "true";
-		}
-	  
-		rateThumbs.forEach(function (thumb, index) {
-		  thumb.addEventListener("click", function () {
-			const rateDiv = thumb.closest(".rate");
-			const rateNumber = rateDiv.querySelector(".rate_number");
-			const thumbsUpIcon = thumb.querySelector("i.fa.fa-thumbs-up");
-	  
-			// Sprawdź, czy użytkownik oddał już głos
-			const userId = getUserId();
-			const hasUserVoted = hasUserAlreadyVoted(userId);
-	  
-			if (!hasUserVoted) {
-			  // Jeśli użytkownik nie oddał jeszcze głosu, zezwól na oddanie
-			  const divIndex = index;
-			  const totalVotes = getTotalVotes(divIndex);
-	  
-			  rateNumber.textContent = parseInt(rateNumber.textContent, 10) + 1;
-			  thumbsUpIcon.style.color = "#2ed3ae";
-			  thumbsUpIcon.classList.remove("fa-thumbs-up");
-			  thumbsUpIcon.classList.add("fa-thumbs-up");
-	  
-			  // Zaktualizuj ogólną liczbę oddanych głosów
-			  updateTotalVotes(divIndex, totalVotes + 1);
-	  
-			  // Zaznacz, że użytkownik oddał głos
-			  markUserAsVoted(userId);
-	  
-			  // Pokaż komunikat dla użytkownika
-			  const votedMessage = document.getElementById("votedMessage");
-			  votedMessage.style.display = "block";
-	  
-			  // Zapisz dane w Local Storage używając indeksu jako klucza
-			  const dataToStore = {
-				rateNumber: rateNumber.textContent,
-				thumbsUpColor: thumbsUpIcon.style.color
-			  };
-			  localStorage.setItem(`rate_data_${index}`, JSON.stringify(dataToStore));
-			}
-		  });
-		});
-	  
-		// Odczytaj dane z Local Storage i ustaw dla każdego diva
-		const rateDivs = document.querySelectorAll(".rate");
-		rateDivs.forEach(function (rateDiv, index) {
-		  const data = localStorage.getItem(`rate_data_${index}`);
-		  if (data) {
-			const parsedData = JSON.parse(data);
-			const rateNumber = rateDiv.querySelector(".rate_number");
-			const thumbsUpIconExisting = rateDiv.querySelector("i.fa.fa-thumbs-up");
-	  
-			rateNumber.textContent = parsedData.rateNumber;
-			if (thumbsUpIconExisting) {
-			  thumbsUpIconExisting.style.color = parsedData.thumbsUpColor;
-			}
-	  
-			// Odczytaj ogólną liczbę oddanych głosów i ustaw ją w rate_number
-			const totalVotes = getTotalVotes(index);
-			rateDiv.querySelector(".rate_number").textContent = totalVotes.toString();
-		  }
-		});
-	  });
 }());
 
 
 // Wysyłanie nowej karty
 
+// Aktualizacja URL serwera
+const baseUrl = 'http://capslo-001-site1.atempurl.com';
+
 document.addEventListener('DOMContentLoaded', function () {
-	var form = document.getElementById('sendNewCard');
+	const form = document.getElementById('sendNewCard');
+	const cardPhotoInput = document.getElementById('card_photo');
+  
+	cardPhotoInput.addEventListener('change', function () {
+	  // Aktualizuj podgląd obrazu lub wykonaj inne operacje po zmianie pliku
+	});
   
 	form.addEventListener('submit', function (event) {
 	  event.preventDefault();
   
-	  var cardName = document.getElementById('card_name').value;
-	  var cardPhotoInput = document.getElementById('card_photo');
-	  var cardPhoto = cardPhotoInput.files[0];
+	  const cardName = document.getElementById('card_name').value;
+	  const cardPhoto = cardPhotoInput.files[0];
   
-	  var formData = new FormData();
-	  formData.append('card_name', cardName);
-	  formData.append('card_photo', cardPhoto);
+	  const formData = new FormData();
+	  formData.append('ImageData', cardPhoto);  // Użyj nazwy z pola card_name
+	  formData.append('ImageName', cardName + '.jpg');
   
-	  console.log('Dane do wysłania:', formData);
+	  
   
-	  // Utworzenie obiektu żądania
-	  fetch(form.action, {
+	  fetch(`${baseUrl}/Photo/Add`, {
 		method: 'POST',
 		body: formData,
 	  })
 		.then(function (response) {
 		  console.log('Odpowiedź serwera:', response);
+  
 		  if (!response.ok) {
 			throw new Error('Wystąpił błąd podczas wysyłania danych');
 		  }
+  
 		  return response.json();
 		})
 		.then(function (data) {
@@ -1270,89 +1195,23 @@ document.addEventListener('DOMContentLoaded', function () {
 		  console.log('Odpowiedź serwera (JSON):', data);
 		})
 		.catch(function (error) {
-		  console.error('Błąd:', error.message);
+		  console.error('Błąd podczas wysyłania żądania:', error);
 		});
 	});
   });
 
-//add: 		http://capslo-001-site1.atempurl.com/Photo/Add
-//getall: 	http://capslo-001-site1.atempurl.com/Photo/GetAll
-//vote: 	http://capslo-001-site1.atempurl.com/Photo/Vote
-
   //Pobieranie wszystkich kard
-
+// function getAllCards() {
 //   document.addEventListener('DOMContentLoaded', function () {
-//   var allCardsWrapper = document.getElementById('allCardsWrapper');
-
-//   // Pobranie danych z endpointa
-//   fetch('http://capslo-001-site1.atempurl.com/Photo/GetAll')
-//     .then(function (response) {
-//       if (!response.ok) {
-//         throw new Error('Błąd podczas pobierania danych');
-//       }
-//       return response.json();
-//     })
-//     .then(function (data) {
-//       // Pętla po pobranych danych i dodawanie do #allCardsWrapper
-//       data.forEach(function (card) {
-//         var cardDiv = document.createElement('div');
-//         cardDiv.className = 'col-md-4 col-xl-3';
-
-//         var cardLink = document.createElement('a');
-//         cardLink.className = 'thumb-modern';
-//         cardLink.setAttribute('data-lightgallery', 'item');
-//         cardLink.href = '';  // Tutaj podstaw link do oryginalnego obrazu
-
-//         var figure = document.createElement('figure');
-
-//         var img = document.createElement('img');
-//         img.src = card.photoUrl;  // Tutaj podstaw link do zdjęcia
-//         img.alt = '';
-//         img.width = 472;
-//         img.height = 355;
-
-//         var overlay = document.createElement('div');
-//         overlay.className = 'thumb-modern__overlay';
-
-//         figure.appendChild(img);
-//         cardLink.appendChild(figure);
-//         cardLink.appendChild(overlay);
-
-//         var rateDiv = document.createElement('div');
-//         rateDiv.className = 'rate';
-
-//         var rateNumber = document.createElement('div');
-//         rateNumber.className = 'rate_number';
-//         rateNumber.textContent = card.rating;  // Tutaj podstaw ocenę z danych
-
-//         var rateThumb = document.createElement('div');
-//         rateThumb.className = 'rate_thumb';
-
-//         var thumbsUpIcon = document.createElement('i');
-//         thumbsUpIcon.className = 'fa fa-thumbs-up';
-//         thumbsUpIcon.setAttribute('aria-hidden', 'true');
-
-//         rateThumb.appendChild(thumbsUpIcon);
-
-//         rateDiv.appendChild(rateNumber);
-//         rateDiv.appendChild(rateThumb);
-
-//         cardDiv.appendChild(cardLink);
-//         cardDiv.appendChild(rateDiv);
-
-//         // Dodanie elementu do #allCardsWrapper
-//         allCardsWrapper.appendChild(cardDiv);
-//       });
-//     })
-//     .catch(function (error) {
-//       console.error('Błąd:', error.message);
-//     });
-// });
-
-// document.addEventListener('DOMContentLoaded', function () {
 // 	var allCardsWrapper = document.getElementById('allCardsWrapper');
   
-// 	fetch('https://randomuser.me/api/0.8/?results=10')
+// 	// Pobranie danych z endpointa
+// 	fetch(`${baseUrl}/Photo/GetAllImagesWithPoints`, {
+// 		method: 'GET',
+// 		headers: {
+// 		  'accept': '*/*'
+// 		}
+// 	  })
 // 	  .then(function (response) {
 // 		if (!response.ok) {
 // 		  throw new Error('Błąd podczas pobierania danych');
@@ -1361,21 +1220,20 @@ document.addEventListener('DOMContentLoaded', function () {
 // 	  })
 // 	  .then(function (data) {
 // 		// Pętla po pobranych danych i dodawanie do #allCardsWrapper
-// 		data.results.forEach(function (result) {
-// 		  var user = result.user;
-  
+// 		data.forEach(function (card) {
 // 		  var cardDiv = document.createElement('div');
 // 		  cardDiv.className = 'col-md-4 col-xl-3';
+// 		  cardDiv.id = card.imageId;
   
 // 		  var cardLink = document.createElement('a');
 // 		  cardLink.className = 'thumb-modern';
 // 		  cardLink.setAttribute('data-lightgallery', 'item');
-// 		  cardLink.href = user.picture.large;
+// 		  cardLink.href = 'data:image/jpeg;base64,' + card.imageData; // Tutaj podstaw link do oryginalnego obrazu
   
 // 		  var figure = document.createElement('figure');
   
 // 		  var img = document.createElement('img');
-// 		  img.src = user.picture.large;
+// 		  img.src = 'data:image/jpeg;base64,' + card.imageData; // Konwersja base64 do obrazu
 // 		  img.alt = '';
 // 		  img.width = 472;
 // 		  img.height = 355;
@@ -1392,7 +1250,7 @@ document.addEventListener('DOMContentLoaded', function () {
   
 // 		  var rateNumber = document.createElement('div');
 // 		  rateNumber.className = 'rate_number';
-// 		  rateNumber.textContent = user.username;
+// 		  rateNumber.textContent = card.points; // Tutaj podstaw ocenę z danych
   
 // 		  var rateThumb = document.createElement('div');
 // 		  rateThumb.className = 'rate_thumb';
@@ -1417,3 +1275,222 @@ document.addEventListener('DOMContentLoaded', function () {
 // 		console.error('Błąd:', error.message);
 // 	  });
 //   });
+// }
+// getAllCards();
+
+
+// Funkcja do dodawania punktu
+document.addEventListener('DOMContentLoaded', function () {
+	var baseUrl = 'http://capslo-001-site1.atempurl.com'; // Zmień na swoje potrzeby
+	var pageLoader = document.getElementById('page-loader');
+	var cardsWrapper = document.getElementById('allCardsWrapper');
+  
+	// Funkcja do pokazywania i ukrywania loadera
+	function toggleLoader(showLoader) {
+	  pageLoader.style.display = showLoader ? 'block' : 'none';
+	}
+  
+	// Funkcja do uzyskiwania unikalnego identyfikatora użytkownika
+	function getUserId() {
+	  // Tutaj możesz implementować logikę uzyskiwania unikalnego identyfikatora użytkownika
+	  // Na przykład, można wykorzystać ciasteczka lub generować losowy identyfikator
+	  // Poniżej znajduje się przykładowa implementacja przy użyciu ciasteczek:
+	  var userId = localStorage.getItem('user_id');
+	  if (!userId) {
+		userId = 'user_' + Math.random().toString(36).substring(7);
+		localStorage.setItem('user_id', userId);
+	  }
+	  return userId;
+	}
+  
+	// Funkcja do oznaczania użytkownika jako oddającego głos
+	function markUserAsVoted(userId) {
+	  // Zapisz informację w Local Storage, że użytkownik o danym identyfikatorze oddał głos
+	  localStorage.setItem(`user_vote_${userId}`, 'true');
+	}
+  
+	// Funkcja do sprawdzania, czy użytkownik oddał już głos
+	function hasUserAlreadyVoted(userId) {
+	  const hasVoted = localStorage.getItem(`user_vote_${userId}`);
+	  return hasVoted === 'true';
+	}
+  
+	// Funkcja do dodawania punktu
+	function addPoint(imageId, currentPoints) {
+	  // Sprawdź, czy użytkownik oddał już głos
+	  const userId = getUserId();
+	  const hasUserVoted = hasUserAlreadyVoted(userId);
+  
+	  if (!hasUserVoted) {
+		// Zaktualizuj liczbę punktów
+		var updatedPoints = currentPoints + 1;
+  
+		// Wyślij nową ocenę na serwer
+		fetch(`${baseUrl}/Point/${imageId}/AddPoint`, {
+		  method: 'POST',
+		  headers: {
+			'Content-Type': 'application/json',
+			'Accept': 'application/json',
+		  },
+		  body: JSON.stringify({
+			points: updatedPoints,
+			userId: userId, // Dodaj identyfikator użytkownika do danych przesyłanych na serwer
+		  }),
+		})
+		.then(function (response) {
+		  if (!response.ok) {
+			throw new Error('Błąd podczas dodawania punktu');
+		  }
+		  console.log('Punkt został pomyślnie dodany');
+  
+		  // Oznacz użytkownika jako oddającego głos
+		  markUserAsVoted(userId);
+  
+		  // Ponownie pobierz wszystkie karty po zaktualizowaniu punktu
+		  getAllCards();
+		})
+		.catch(function (error) {
+		  console.error('Błąd:', error.message);
+		});
+	  }
+	}
+  
+	// Funkcja do pobierania wszystkich kart
+	function getAllCards() {
+	  toggleLoader(true); // Pokaż loader przed rozpoczęciem ładowania
+  
+	  var allCardsWrapper = document.getElementById('allCardsWrapper');
+
+	  // Dodaj informację o ładowaniu kart światecznych do #allCardsWrapper
+	  allCardsWrapper.innerHTML = '<p class="text-center">Ładowanie kart świątecznych...</p>';
+  
+	  // Pobranie danych z endpointa
+	  fetch(`${baseUrl}/Photo/GetAllImagesWithPoints`, {
+		method: 'GET',
+		headers: {
+		  'accept': '*/*'
+		}
+	  })
+	  .then(function (response) {
+		if (!response.ok) {
+		  throw new Error('Błąd podczas pobierania danych');
+		}
+		return response.json();
+	  })
+	  .then(function (data) {
+		// Usuń wszystkie istniejące karty przed ponownym ich utworzeniem
+		allCardsWrapper.innerHTML = '';
+  
+		// Pętla po pobranych danych i dodawanie do #allCardsWrapper
+		data.forEach(function (card) {
+		  var cardDiv = document.createElement('div');
+		  cardDiv.className = 'col-md-4 col-xl-3';
+		  cardDiv.id = card.imageId;
+  
+		  var cardLink = document.createElement('a');
+		  cardLink.className = 'thumb-modern';
+		  cardLink.setAttribute('data-lightgallery', 'item');
+		  cardLink.href = 'data:image/jpeg;base64,' + card.imageData;
+  
+		  var figure = document.createElement('figure');
+  
+		  var img = document.createElement('img');
+		  img.src = 'data:image/jpeg;base64,' + card.imageData;
+		  img.alt = '';
+		  img.width = 472;
+		  img.height = 355;
+  
+		  var overlay = document.createElement('div');
+		  overlay.className = 'thumb-modern__overlay';
+  
+		  figure.appendChild(img);
+		  cardLink.appendChild(figure);
+		  cardLink.appendChild(overlay);
+  
+		  var rateDiv = document.createElement('div');
+		  rateDiv.className = 'rate';
+  
+		  var rateNumber = document.createElement('div');
+		  rateNumber.className = 'rate_number';
+		  rateNumber.textContent = card.points;
+  
+		  var rateThumb = document.createElement('div');
+		  rateThumb.className = 'rate_thumb';
+  
+		  // Dodaj event do diva "rate_thumb"
+		  rateThumb.addEventListener('click', function () {
+			// Dodaj warunek, aby nie można było oddać więcej niż jednego głosu
+			if (!rateThumb.classList.contains('voted')) {
+			  addPoint(card.imageId, card.points);
+			  rateThumb.classList.add('voted'); // Dodaj klasę, oznaczającą oddanie głosu
+			}
+		  });
+  
+		  var thumbsUpIcon = document.createElement('i');
+		  thumbsUpIcon.className = 'fa fa-thumbs-up';
+		  thumbsUpIcon.setAttribute('aria-hidden', 'true');
+  
+		  rateThumb.appendChild(thumbsUpIcon);
+  
+		  rateDiv.appendChild(rateNumber);
+		  rateDiv.appendChild(rateThumb);
+  
+		  cardDiv.appendChild(cardLink);
+		  cardDiv.appendChild(rateDiv);
+  
+		  // Dodanie elementu do #allCardsWrapper
+		  allCardsWrapper.appendChild(cardDiv);
+		});
+  
+		toggleLoader(false); // Ukryj loader po zakończeniu ładowania
+	  })
+	  .catch(function (error) {
+		console.error('Błąd:', error.message);
+		toggleLoader(false); // Ukryj loader w przypadku błędu
+	  });
+	}
+  
+	// Wywołaj funkcję pobierania wszystkich kart po załadowaniu strony
+	getAllCards();
+  });
+
+ 
+
+  //Delete
+
+//   document.addEventListener('DOMContentLoaded', function () {
+// 	// Wstaw odpowiedni identyfikator obrazu, który chcesz usunąć
+// 	var imageIdToDelete = 'd6c2ed49-9bd4-49b7-a4e3-84ed3c9ddd7e';
+	
+// 	// Aktualizacja URL serwera
+// 	var baseUrl = 'http://capslo-001-site1.atempurl.com';
+  
+// 	// Utworzenie obiektu żądania DELETE
+// 	fetch(`${baseUrl}/Photo/${imageIdToDelete}`, {
+// 	  method: 'DELETE',
+// 	  headers: {
+// 		'Accept': 'application/json',
+// 		'Content-Type': 'application/json'
+// 	  },
+// 	})
+// 	.then(function (response) {
+// 	  if (!response.ok) {
+// 		throw new Error('Błąd podczas usuwania zdjęcia');
+// 	  }
+// 	  console.log('Zdjęcie zostało pomyślnie usunięte');
+// 	})
+// 	.catch(function (error) {
+// 	  console.error('Błąd:', error.message);
+// 	});
+//   });
+  
+//   fetch('http://capslo-001-site1.atempurl.com/Photo/GetAllImagesWithPoints', {
+// 	method: 'GET',
+// 	headers: {
+// 	  'accept': '*/*'
+// 	}
+//   })
+//   .then(response => response.json())
+//   .then(data => console.log(data))
+//   .catch(error => console.error('Error:', error));
+  

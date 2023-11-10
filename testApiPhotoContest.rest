@@ -1,0 +1,30 @@
+@baseUrl = http://capslo-001-site1.atempurl.com
+
+###
+
+# Adds a new image using the POST method
+POST {{baseUrl}}/Photo/Add HTTP/1.1
+Content-Type: multipart/form-data; boundary=YourBoundary
+
+--YourBoundary
+Content-Disposition: form-data; name="ImageData"; filename="test2.jpg"
+Content-Type: image/jpeg
+
+< @C:\\Users\\bgorzelak\\Downloads\\test2.jpg
+--YourBoundary
+Content-Disposition: form-data; name="ImageName"
+
+testName
+--YourBoundary--
+
+# Deletes an image using the DELETE method and the imageId
+DELETE {{baseUrl}}/Photo/{imageId} HTTP/1.1
+
+###
+
+# Gets all images with points using the GET method
+GET {{baseUrl}}/Photo/GetAllImagesWithPoints HTTP/1.1
+
+# Adds a point to an image using the POST method
+POST {{baseUrl}}/Point/{imageId}/AddPoint HTTP/1.1
+Content-Type: application/json
