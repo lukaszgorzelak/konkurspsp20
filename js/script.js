@@ -1155,7 +1155,7 @@
 // Wysyłanie nowej karty
 
 // Aktualizacja URL serwera
-const baseUrl = 'http://capslo-001-site1.atempurl.com';
+const baseUrl = 'https://capslo-001-site1.atempurl.com';
 
 document.addEventListener('DOMContentLoaded', function () {
 	const form = document.getElementById('sendNewCard');
@@ -1281,7 +1281,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Funkcja do dodawania punktu
 document.addEventListener('DOMContentLoaded', function () {
-	var baseUrl = 'http://capslo-001-site1.atempurl.com'; // Zmień na swoje potrzeby
+	var baseUrl = 'https://capslo-001-site1.atempurl.com'; // Zmień na swoje potrzeby
 	var pageLoader = document.getElementById('page-loader');
 	var cardsWrapper = document.getElementById('allCardsWrapper');
   
@@ -1292,9 +1292,6 @@ document.addEventListener('DOMContentLoaded', function () {
   
 	// Funkcja do uzyskiwania unikalnego identyfikatora użytkownika
 	function getUserId() {
-	  // Tutaj możesz implementować logikę uzyskiwania unikalnego identyfikatora użytkownika
-	  // Na przykład, można wykorzystać ciasteczka lub generować losowy identyfikator
-	  // Poniżej znajduje się przykładowa implementacja przy użyciu ciasteczek:
 	  var userId = localStorage.getItem('user_id');
 	  if (!userId) {
 		userId = 'user_' + Math.random().toString(36).substring(7);
@@ -1305,7 +1302,6 @@ document.addEventListener('DOMContentLoaded', function () {
   
 	// Funkcja do oznaczania użytkownika jako oddającego głos
 	function markUserAsVoted(userId) {
-	  // Zapisz informację w Local Storage, że użytkownik o danym identyfikatorze oddał głos
 	  localStorage.setItem(`user_vote_${userId}`, 'true');
 	}
   
@@ -1317,15 +1313,13 @@ document.addEventListener('DOMContentLoaded', function () {
   
 	// Funkcja do dodawania punktu
 	function addPoint(imageId, currentPoints) {
-	  // Sprawdź, czy użytkownik oddał już głos
 	  const userId = getUserId();
 	  const hasUserVoted = hasUserAlreadyVoted(userId);
   
 	  if (!hasUserVoted) {
-		// Zaktualizuj liczbę punktów
 		var updatedPoints = currentPoints + 1;
   
-		// Wyślij nową ocenę na serwer
+		// Sprawdź, czy użytkownik oddał już głos
 		fetch(`${baseUrl}/Point/${imageId}/AddPoint`, {
 		  method: 'POST',
 		  headers: {
@@ -1334,37 +1328,48 @@ document.addEventListener('DOMContentLoaded', function () {
 		  },
 		  body: JSON.stringify({
 			points: updatedPoints,
-			userId: userId, // Dodaj identyfikator użytkownika do danych przesyłanych na serwer
+			userId: userId,
 		  }),
 		})
 		.then(function (response) {
 		  if (!response.ok) {
 			throw new Error('Błąd podczas dodawania punktu');
 		  }
+  
 		  console.log('Punkt został pomyślnie dodany');
   
-		  // Oznacz użytkownika jako oddającego głos
 		  markUserAsVoted(userId);
   
-		  // Ponownie pobierz wszystkie karty po zaktualizowaniu punktu
 		  getAllCards();
 		})
 		.catch(function (error) {
 		  console.error('Błąd:', error.message);
+		});
+	  } else {
+		// Pobierz element komunikatu
+		var votedMessageContainer = document.getElementById('votedMessage');
+
+		// Wyświetl komunikat, jeśli użytkownik próbuje oddać drugi głos
+		votedMessageContainer.style.display = 'block';
+	
+		// Pobierz aktualny odstęp górnego marginesu (margin-top) elementu komunikatu
+		var marginTop = parseInt(window.getComputedStyle(votedMessageContainer).marginTop, 10);
+
+		// Przewiń do elementu komunikatu z dodatkowym odstępem (100 pikseli) do góry
+		window.scrollTo({
+		  top: votedMessageContainer.offsetTop - marginTop - 100,
+		  behavior: 'smooth'
 		});
 	  }
 	}
   
 	// Funkcja do pobierania wszystkich kart
 	function getAllCards() {
-	  toggleLoader(true); // Pokaż loader przed rozpoczęciem ładowania
+	  toggleLoader(true);
   
 	  var allCardsWrapper = document.getElementById('allCardsWrapper');
-
-	  // Dodaj informację o ładowaniu kart światecznych do #allCardsWrapper
 	  allCardsWrapper.innerHTML = '<p class="text-center">Ładowanie kart świątecznych...</p>';
   
-	  // Pobranie danych z endpointa
 	  fetch(`${baseUrl}/Photo/GetAllImagesWithPoints`, {
 		method: 'GET',
 		headers: {
@@ -1378,10 +1383,8 @@ document.addEventListener('DOMContentLoaded', function () {
 		return response.json();
 	  })
 	  .then(function (data) {
-		// Usuń wszystkie istniejące karty przed ponownym ich utworzeniem
 		allCardsWrapper.innerHTML = '';
   
-		// Pętla po pobranych danych i dodawanie do #allCardsWrapper
 		data.forEach(function (card) {
 		  var cardDiv = document.createElement('div');
 		  cardDiv.className = 'col-md-4 col-xl-3';
@@ -1417,12 +1420,10 @@ document.addEventListener('DOMContentLoaded', function () {
 		  var rateThumb = document.createElement('div');
 		  rateThumb.className = 'rate_thumb';
   
-		  // Dodaj event do diva "rate_thumb"
 		  rateThumb.addEventListener('click', function () {
-			// Dodaj warunek, aby nie można było oddać więcej niż jednego głosu
 			if (!rateThumb.classList.contains('voted')) {
 			  addPoint(card.imageId, card.points);
-			  rateThumb.classList.add('voted'); // Dodaj klasę, oznaczającą oddanie głosu
+			  rateThumb.classList.add('voted');
 			}
 		  });
   
@@ -1438,21 +1439,19 @@ document.addEventListener('DOMContentLoaded', function () {
 		  cardDiv.appendChild(cardLink);
 		  cardDiv.appendChild(rateDiv);
   
-		  // Dodanie elementu do #allCardsWrapper
 		  allCardsWrapper.appendChild(cardDiv);
 		});
   
-		toggleLoader(false); // Ukryj loader po zakończeniu ładowania
+		toggleLoader(false);
 	  })
 	  .catch(function (error) {
 		console.error('Błąd:', error.message);
-		toggleLoader(false); // Ukryj loader w przypadku błędu
+		toggleLoader(false);
 	  });
 	}
   
-	// Wywołaj funkcję pobierania wszystkich kart po załadowaniu strony
 	getAllCards();
-  });
+});
 
  
 
@@ -1463,7 +1462,7 @@ document.addEventListener('DOMContentLoaded', function () {
 // 	var imageIdToDelete = 'd6c2ed49-9bd4-49b7-a4e3-84ed3c9ddd7e';
 	
 // 	// Aktualizacja URL serwera
-// 	var baseUrl = 'http://capslo-001-site1.atempurl.com';
+// 	var baseUrl = 'https://capslo-001-site1.atempurl.com';
   
 // 	// Utworzenie obiektu żądania DELETE
 // 	fetch(`${baseUrl}/Photo/${imageIdToDelete}`, {
@@ -1484,7 +1483,7 @@ document.addEventListener('DOMContentLoaded', function () {
 // 	});
 //   });
   
-//   fetch('http://capslo-001-site1.atempurl.com/Photo/GetAllImagesWithPoints', {
+//   fetch('https://capslo-001-site1.atempurl.com/Photo/GetAllImagesWithPoints', {
 // 	method: 'GET',
 // 	headers: {
 // 	  'accept': '*/*'
