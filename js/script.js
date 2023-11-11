@@ -1151,6 +1151,23 @@
 	//   });
 }());
 
+function showMessage(){
+	// Pobierz element komunikatu
+	var votedMessageContainer = document.getElementById('votedMessage');
+
+	// Wyświetl komunikat, jeśli użytkownik próbuje oddać drugi głos
+	votedMessageContainer.style.display = 'block';
+
+	// Pobierz aktualny odstęp górnego marginesu (margin-top) elementu komunikatu
+	var marginTop = parseInt(window.getComputedStyle(votedMessageContainer).marginTop, 10);
+
+	// Przewiń do elementu komunikatu z dodatkowym odstępem (100 pikseli) do góry
+	window.scrollTo({
+	  top: votedMessageContainer.offsetTop - marginTop - 100,
+	  behavior: 'smooth'
+	});
+}
+
 
 // Wysyłanie nowej karty
 
@@ -1199,85 +1216,6 @@ document.addEventListener('DOMContentLoaded', function () {
 		});
 	});
   });
-
-  //Pobieranie wszystkich kard
-// function getAllCards() {
-//   document.addEventListener('DOMContentLoaded', function () {
-// 	var allCardsWrapper = document.getElementById('allCardsWrapper');
-  
-// 	// Pobranie danych z endpointa
-// 	fetch(`${baseUrl}/Photo/GetAllImagesWithPoints`, {
-// 		method: 'GET',
-// 		headers: {
-// 		  'accept': '*/*'
-// 		}
-// 	  })
-// 	  .then(function (response) {
-// 		if (!response.ok) {
-// 		  throw new Error('Błąd podczas pobierania danych');
-// 		}
-// 		return response.json();
-// 	  })
-// 	  .then(function (data) {
-// 		// Pętla po pobranych danych i dodawanie do #allCardsWrapper
-// 		data.forEach(function (card) {
-// 		  var cardDiv = document.createElement('div');
-// 		  cardDiv.className = 'col-md-4 col-xl-3';
-// 		  cardDiv.id = card.imageId;
-  
-// 		  var cardLink = document.createElement('a');
-// 		  cardLink.className = 'thumb-modern';
-// 		  cardLink.setAttribute('data-lightgallery', 'item');
-// 		  cardLink.href = 'data:image/jpeg;base64,' + card.imageData; // Tutaj podstaw link do oryginalnego obrazu
-  
-// 		  var figure = document.createElement('figure');
-  
-// 		  var img = document.createElement('img');
-// 		  img.src = 'data:image/jpeg;base64,' + card.imageData; // Konwersja base64 do obrazu
-// 		  img.alt = '';
-// 		  img.width = 472;
-// 		  img.height = 355;
-  
-// 		  var overlay = document.createElement('div');
-// 		  overlay.className = 'thumb-modern__overlay';
-  
-// 		  figure.appendChild(img);
-// 		  cardLink.appendChild(figure);
-// 		  cardLink.appendChild(overlay);
-  
-// 		  var rateDiv = document.createElement('div');
-// 		  rateDiv.className = 'rate';
-  
-// 		  var rateNumber = document.createElement('div');
-// 		  rateNumber.className = 'rate_number';
-// 		  rateNumber.textContent = card.points; // Tutaj podstaw ocenę z danych
-  
-// 		  var rateThumb = document.createElement('div');
-// 		  rateThumb.className = 'rate_thumb';
-  
-// 		  var thumbsUpIcon = document.createElement('i');
-// 		  thumbsUpIcon.className = 'fa fa-thumbs-up';
-// 		  thumbsUpIcon.setAttribute('aria-hidden', 'true');
-  
-// 		  rateThumb.appendChild(thumbsUpIcon);
-  
-// 		  rateDiv.appendChild(rateNumber);
-// 		  rateDiv.appendChild(rateThumb);
-  
-// 		  cardDiv.appendChild(cardLink);
-// 		  cardDiv.appendChild(rateDiv);
-  
-// 		  // Dodanie elementu do #allCardsWrapper
-// 		  allCardsWrapper.appendChild(cardDiv);
-// 		});
-// 	  })
-// 	  .catch(function (error) {
-// 		console.error('Błąd:', error.message);
-// 	  });
-//   });
-// }
-// getAllCards();
-
 
 // Funkcja do dodawania punktu
 document.addEventListener('DOMContentLoaded', function () {
@@ -1333,6 +1271,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		})
 		.then(function (response) {
 		  if (!response.ok) {
+			showMessage();
 			throw new Error('Błąd podczas dodawania punktu');
 		  }
   
@@ -1346,20 +1285,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		  console.error('Błąd:', error.message);
 		});
 	  } else {
-		// Pobierz element komunikatu
-		var votedMessageContainer = document.getElementById('votedMessage');
-
-		// Wyświetl komunikat, jeśli użytkownik próbuje oddać drugi głos
-		votedMessageContainer.style.display = 'block';
-	
-		// Pobierz aktualny odstęp górnego marginesu (margin-top) elementu komunikatu
-		var marginTop = parseInt(window.getComputedStyle(votedMessageContainer).marginTop, 10);
-
-		// Przewiń do elementu komunikatu z dodatkowym odstępem (100 pikseli) do góry
-		window.scrollTo({
-		  top: votedMessageContainer.offsetTop - marginTop - 100,
-		  behavior: 'smooth'
-		});
+		showMessage();
 	  }
 	}
   
