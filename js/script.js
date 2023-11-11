@@ -1312,61 +1312,68 @@ document.addEventListener('DOMContentLoaded', function () {
 		allCardsWrapper.innerHTML = '';
   
 		data.forEach(function (card) {
-		  var cardDiv = document.createElement('div');
-		  cardDiv.className = 'col-md-4 col-xl-3';
-		  cardDiv.id = card.imageId;
-  
-		  var cardLink = document.createElement('a');
-		  cardLink.className = 'thumb-modern';
-		  cardLink.setAttribute('data-lightgallery', 'item');
-		  cardLink.href = 'data:image/jpeg;base64,' + card.imageData;
-  
-		  var figure = document.createElement('figure');
-  
-		  var img = document.createElement('img');
-		  img.src = 'data:image/jpeg;base64,' + card.imageData;
-		  img.alt = '';
-		  img.width = 472;
-		  img.height = 355;
-  
-		  var overlay = document.createElement('div');
-		  overlay.className = 'thumb-modern__overlay';
-  
-		  figure.appendChild(img);
-		  cardLink.appendChild(figure);
-		  cardLink.appendChild(overlay);
-  
-		  var rateDiv = document.createElement('div');
-		  rateDiv.className = 'rate';
-  
-		  var rateNumber = document.createElement('div');
-		  rateNumber.className = 'rate_number';
-		  rateNumber.textContent = card.points;
-  
-		  var rateThumb = document.createElement('div');
-		  rateThumb.className = 'rate_thumb';
-  
-		  rateThumb.addEventListener('click', function () {
-			if (!rateThumb.classList.contains('voted')) {
-			  addPoint(card.imageId, card.points);
-			  rateThumb.classList.add('voted');
-			}
-		  });
-  
-		  var thumbsUpIcon = document.createElement('i');
-		  thumbsUpIcon.className = 'fa fa-thumbs-up';
-		  thumbsUpIcon.setAttribute('aria-hidden', 'true');
-  
-		  rateThumb.appendChild(thumbsUpIcon);
-  
-		  rateDiv.appendChild(rateNumber);
-		  rateDiv.appendChild(rateThumb);
-  
-		  cardDiv.appendChild(cardLink);
-		  cardDiv.appendChild(rateDiv);
-  
-		  allCardsWrapper.appendChild(cardDiv);
+			var cardDiv = document.createElement('div');
+			cardDiv.className = 'col-md-4 col-xl-3';
+			cardDiv.id = card.imageId;
+		
+			var cardLink = document.createElement('a');
+			cardLink.className = 'thumb-modern';
+			cardLink.setAttribute('data-lightgallery', 'item');
+			cardLink.href = 'data:image/jpeg;base64,' + card.imageData;
+		
+			var figure = document.createElement('figure');
+		
+			var img = document.createElement('img');
+			img.src = 'data:image/jpeg;base64,' + card.imageData;
+			img.alt = '';
+			img.width = 472;
+			img.height = 355;
+		
+			var caption = document.createElement('p');
+			caption.textContent = card.imageName.replace(/\.[^/.]+$/, ''); // Usunięcie rozszerzenia pliku
+		
+			caption.style.margin = '0'; // Dodanie stylu margin: 0
+		
+			var overlay = document.createElement('div');
+			// overlay.className = 'thumb-modern__overlay';
+		
+			var rateDiv = document.createElement('div');
+			rateDiv.className = 'rate';
+		
+			var rateNumber = document.createElement('div');
+			rateNumber.className = 'rate_number';
+			rateNumber.textContent = card.points;
+		
+			var rateThumb = document.createElement('div');
+			rateThumb.className = 'rate_thumb';
+		
+			rateThumb.addEventListener('click', function () {
+				if (!rateThumb.classList.contains('voted')) {
+					addPoint(card.imageId, card.points);
+					rateThumb.classList.add('voted');
+				}
+			});
+		
+			var thumbsUpIcon = document.createElement('i');
+			thumbsUpIcon.className = 'fa fa-thumbs-up';
+			thumbsUpIcon.setAttribute('aria-hidden', 'true');
+		
+			rateThumb.appendChild(thumbsUpIcon);
+		
+			rateDiv.appendChild(rateNumber);
+			rateDiv.appendChild(rateThumb);
+		
+			figure.appendChild(img);
+			cardLink.appendChild(figure);
+			cardLink.appendChild(overlay);
+		
+			cardDiv.appendChild(cardLink);
+			cardDiv.appendChild(caption);
+			cardDiv.appendChild(rateDiv);
+		
+			allCardsWrapper.appendChild(cardDiv);
 		});
+		
   
 		toggleLoader(false);
 	  })
@@ -1379,6 +1386,15 @@ document.addEventListener('DOMContentLoaded', function () {
 	getAllCards();
 });
 
+// fetch('https://capslo-001-site1.atempurl.com/Photo/GetAllImagesWithPoints', {
+//   method: 'GET',
+//   headers: {
+//     'accept': '*/*'
+//   }
+// })
+// .then(response => response.json())
+// .then(data => console.log(data))
+// .catch(error => console.error('Error:', error));
  
 
   //Delete

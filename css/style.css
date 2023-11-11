@@ -19284,6 +19284,7 @@ body:not(.lg-from-hash) .lg-outer.lg-start-zoom .lg-item.lg-complete .lg-object 
 	display: flex;
 	justify-content: space-around;
 	font-size: 1.5rem;
+	margin:0;
 }
 
 .rate_number {
