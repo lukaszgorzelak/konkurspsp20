@@ -872,7 +872,7 @@
 				var $form = $(plugins.rdMailForm[i]),
 					formHasCaptcha = false;
 
-				$form.attr('novalidate', 'novalidate').ajaxForm({
+				$form.attr('validate', 'validate').ajaxForm({
 					data: {
 						"form-type": $form.attr("data-form-type") || "contact",
 						"counter": i
