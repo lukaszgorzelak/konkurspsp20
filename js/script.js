@@ -1055,354 +1055,276 @@
 		});
 
 	});
-
-	// document.addEventListener("DOMContentLoaded", function () {
-	// 	const rateThumbs = document.querySelectorAll(".rate_thumb");
-	  
-	// 	// Funkcja do uzyskania unikalnego identyfikatora użytkownika
-	// 	function getUserId() {
-	// 	  // Tutaj możesz implementować logikę uzyskiwania unikalnego identyfikatora użytkownika
-	// 	  // Na przykład, można wykorzystać ciasteczka lub generować losowy identyfikator
-	// 	  return "user_id_example"; // Przykład, zastąp odpowiednią logiką
-	// 	}
-	  
-	// 	// Funkcja do oznaczania użytkownika jako oddającego głos
-	// 	function markUserAsVoted(userId) {
-	// 	  // Zapisz informację w Local Storage, że użytkownik o danym identyfikatorze oddał głos
-	// 	  localStorage.setItem(`user_vote_${userId}`, "true");
-	// 	}
-	  
-	// 	// Funkcja do uzyskiwania ogólnej liczby oddanych głosów dla danego diva
-	// 	function getTotalVotes(divIndex) {
-	// 	  const totalVotes = localStorage.getItem(`total_votes_${divIndex}`);
-	// 	  return totalVotes ? parseInt(totalVotes, 10) : 0;
-	// 	}
-	  
-	// 	// Funkcja do zaktualizowania ogólnej liczby oddanych głosów dla danego diva
-	// 	function updateTotalVotes(divIndex, newTotal) {
-	// 	  localStorage.setItem(`total_votes_${divIndex}`, newTotal.toString());
-	// 	}
-	  
-	// 	// Funkcja do sprawdzania, czy użytkownik oddał już głos
-	// 	function hasUserAlreadyVoted(userId) {
-	// 	  const hasVoted = localStorage.getItem(`user_vote_${userId}`);
-	// 	  return hasVoted === "true";
-	// 	}
-	  
-	// 	rateThumbs.forEach(function (thumb, index) {
-	// 	  thumb.addEventListener("click", function () {
-	// 		const rateDiv = thumb.closest(".rate");
-	// 		const rateNumber = rateDiv.querySelector(".rate_number");
-	// 		const thumbsUpIcon = thumb.querySelector("i.fa.fa-thumbs-up");
-	  
-	// 		// Sprawdź, czy użytkownik oddał już głos
-	// 		const userId = getUserId();
-	// 		const hasUserVoted = hasUserAlreadyVoted(userId);
-	  
-	// 		if (!hasUserVoted) {
-	// 		  // Jeśli użytkownik nie oddał jeszcze głosu, zezwól na oddanie
-	// 		  const divIndex = index;
-	// 		  const totalVotes = getTotalVotes(divIndex);
-	  
-	// 		  rateNumber.textContent = parseInt(rateNumber.textContent, 10) + 1;
-	// 		  thumbsUpIcon.style.color = "#2ed3ae";
-	// 		  thumbsUpIcon.classList.remove("fa-thumbs-up");
-	// 		  thumbsUpIcon.classList.add("fa-thumbs-up");
-	  
-	// 		  // Zaktualizuj ogólną liczbę oddanych głosów
-	// 		  updateTotalVotes(divIndex, totalVotes + 1);
-	  
-	// 		  // Zaznacz, że użytkownik oddał głos
-	// 		  markUserAsVoted(userId);
-	  
-	// 		  // Pokaż komunikat dla użytkownika
-	// 		  const votedMessage = document.getElementById("votedMessage");
-	// 		  votedMessage.style.display = "block";
-	  
-	// 		  // Zapisz dane w Local Storage używając indeksu jako klucza
-	// 		  const dataToStore = {
-	// 			rateNumber: rateNumber.textContent,
-	// 			thumbsUpColor: thumbsUpIcon.style.color
-	// 		  };
-	// 		  localStorage.setItem(`rate_data_${index}`, JSON.stringify(dataToStore));
-	// 		}
-	// 	  });
-	// 	});
-	  
-	// 	// Odczytaj dane z Local Storage i ustaw dla każdego diva
-	// 	const rateDivs = document.querySelectorAll(".rate");
-	// 	rateDivs.forEach(function (rateDiv, index) {
-	// 	  const data = localStorage.getItem(`rate_data_${index}`);
-	// 	  if (data) {
-	// 		const parsedData = JSON.parse(data);
-	// 		const rateNumber = rateDiv.querySelector(".rate_number");
-	// 		const thumbsUpIconExisting = rateDiv.querySelector("i.fa.fa-thumbs-up");
-	  
-	// 		rateNumber.textContent = parsedData.rateNumber;
-	// 		if (thumbsUpIconExisting) {
-	// 		  thumbsUpIconExisting.style.color = parsedData.thumbsUpColor;
-	// 		}
-	  
-	// 		// Odczytaj ogólną liczbę oddanych głosów i ustaw ją w rate_number
-	// 		const totalVotes = getTotalVotes(index);
-	// 		rateDiv.querySelector(".rate_number").textContent = totalVotes.toString();
-	// 	  }
-	// 	});
-	//   });
-}());
-
-function showMessage(){
-	// Pobierz element komunikatu
-	var votedMessageContainer = document.getElementById('votedMessage');
-
-	// Wyświetl komunikat, jeśli użytkownik próbuje oddać drugi głos
-	votedMessageContainer.style.display = 'block';
-
-	// Pobierz aktualny odstęp górnego marginesu (margin-top) elementu komunikatu
-	var marginTop = parseInt(window.getComputedStyle(votedMessageContainer).marginTop, 10);
-
-	// Przewiń do elementu komunikatu z dodatkowym odstępem (100 pikseli) do góry
-	window.scrollTo({
-	  top: votedMessageContainer.offsetTop - marginTop - 100,
-	  behavior: 'smooth'
-	});
-}
-
-function showMessageThanks(){
-	// Pobierz element komunikatu
-	var votedMessageContainer = document.getElementById('thanksMessage');
-
-	// Wyświetl komunikat, jeśli użytkownik próbuje oddać drugi głos
-	votedMessageContainer.style.display = 'block';
-
-	// Pobierz aktualny odstęp górnego marginesu (margin-top) elementu komunikatu
-	var marginTop = parseInt(window.getComputedStyle(votedMessageContainer).marginTop, 10);
-
-	// Przewiń do elementu komunikatu z dodatkowym odstępem (100 pikseli) do góry
-	window.scrollTo({
-	  top: votedMessageContainer.offsetTop - marginTop - 100,
-	  behavior: 'smooth'
-	});
-}
-
-
-// Wysyłanie nowej karty
-
-// Aktualizacja URL serwera
-const baseUrl = 'https://capslo-001-site1.atempurl.com';
-
-document.addEventListener('DOMContentLoaded', function () {
-	const form = document.getElementById('sendNewCard');
-	const cardPhotoInput = document.getElementById('card_photo');
-  
-	cardPhotoInput.addEventListener('change', function () {
-	  // Aktualizuj podgląd obrazu lub wykonaj inne operacje po zmianie pliku
-	});
-  
-	form.addEventListener('submit', function (event) {
-	  event.preventDefault();
-  
-	  const cardName = document.getElementById('card_name').value;
-	  const cardPhoto = cardPhotoInput.files[0];
-  
-	  const formData = new FormData();
-	  formData.append('ImageData', cardPhoto);  // Użyj nazwy z pola card_name
-	  formData.append('ImageName', cardName + '.jpg');
-  
-	  
-  
-	  fetch(`${baseUrl}/Photo/Add`, {
-		method: 'POST',
-		body: formData,
-	  })
-		.then(function (response) {
-		  console.log('Odpowiedź serwera:', response);
-  
-		  if (!response.ok) {
-			throw new Error('Wystąpił błąd podczas wysyłania danych');
-		  }
-  
-		  return response.json();
-		})
-		.then(function (data) {
-		  console.log('Dane zostały wysłane pomyślnie');
-		  console.log('Odpowiedź serwera (JSON):', data);
-		})
-		.catch(function (error) {
-		  console.error('Błąd podczas wysyłania żądania:', error);
+	//Konkurs kartki świąteczne
+	function showMessage(){
+		// Pobierz element komunikatu
+		var votedMessageContainer = document.getElementById('votedMessage');
+	
+		// Wyświetl komunikat, jeśli użytkownik próbuje oddać drugi głos
+		votedMessageContainer.style.display = 'block';
+	
+		// Pobierz aktualny odstęp górnego marginesu (margin-top) elementu komunikatu
+		var marginTop = parseInt(window.getComputedStyle(votedMessageContainer).marginTop, 10);
+	
+		// Przewiń do elementu komunikatu z dodatkowym odstępem (100 pikseli) do góry
+		window.scrollTo({
+		  top: votedMessageContainer.offsetTop - marginTop - 100,
+		  behavior: 'smooth'
 		});
-	});
-  });
-
-// Funkcja do dodawania punktu
-document.addEventListener('DOMContentLoaded', function () {
-	var baseUrl = 'https://capslo-001-site1.atempurl.com'; // Zmień na swoje potrzeby
-	var pageLoader = document.getElementById('page-loader');
-	var cardsWrapper = document.getElementById('allCardsWrapper');
-  
-	// Funkcja do pokazywania i ukrywania loadera
-	function toggleLoader(showLoader) {
-	  pageLoader.style.display = showLoader ? 'block' : 'none';
 	}
-  
-	// Funkcja do uzyskiwania unikalnego identyfikatora użytkownika
-	function getUserId() {
-	  var userId = localStorage.getItem('user_id');
-	  if (!userId) {
-		userId = 'user_' + Math.random().toString(36).substring(7);
-		localStorage.setItem('user_id', userId);
-	  }
-	  return userId;
+	
+	function showMessageThanks(){
+		// Pobierz element komunikatu
+		var votedMessageContainer = document.getElementById('thanksMessage');
+	
+		// Wyświetl komunikat, jeśli użytkownik próbuje oddać drugi głos
+		votedMessageContainer.style.display = 'block';
+	
+		// Pobierz aktualny odstęp górnego marginesu (margin-top) elementu komunikatu
+		var marginTop = parseInt(window.getComputedStyle(votedMessageContainer).marginTop, 10);
+	
+		// Przewiń do elementu komunikatu z dodatkowym odstępem (100 pikseli) do góry
+		window.scrollTo({
+		  top: votedMessageContainer.offsetTop - marginTop - 100,
+		  behavior: 'smooth'
+		});
 	}
-  
-	// Funkcja do oznaczania użytkownika jako oddającego głos
-	function markUserAsVoted(userId) {
-	  localStorage.setItem(`user_vote_${userId}`, 'true');
-	}
-  
-	// Funkcja do sprawdzania, czy użytkownik oddał już głos
-	function hasUserAlreadyVoted(userId) {
-	  const hasVoted = localStorage.getItem(`user_vote_${userId}`);
-	  return hasVoted === 'true';
-	}
-  
+	
+	
+	// Wysyłanie nowej karty
+	
+	// Aktualizacja URL serwera
+	const baseUrl = 'https://capslo-001-site1.atempurl.com';
+	
+	document.addEventListener('DOMContentLoaded', function () {
+		const form = document.getElementById('sendNewCard');
+		const cardPhotoInput = document.getElementById('card_photo');
+	  
+		cardPhotoInput.addEventListener('change', function () {
+		  // Aktualizuj podgląd obrazu lub wykonaj inne operacje po zmianie pliku
+		});
+	  
+		form.addEventListener('submit', function (event) {
+		  event.preventDefault();
+	  
+		  const cardName = document.getElementById('card_name').value;
+		  const cardPhoto = cardPhotoInput.files[0];
+	  
+		  const formData = new FormData();
+		  formData.append('ImageData', cardPhoto);  // Użyj nazwy z pola card_name
+		  formData.append('ImageName', cardName + '.jpg');
+	  
+		  
+	  
+		  fetch(`${baseUrl}/Photo/Add`, {
+			method: 'POST',
+			body: formData,
+		  })
+			.then(function (response) {
+			  console.log('Odpowiedź serwera:', response);
+	  
+			  if (!response.ok) {
+				throw new Error('Wystąpił błąd podczas wysyłania danych');
+			  }
+	  
+			  return response.json();
+			})
+			.then(function (data) {
+			  console.log('Dane zostały wysłane pomyślnie');
+			  console.log('Odpowiedź serwera (JSON):', data);
+			})
+			.catch(function (error) {
+			  console.error('Błąd podczas wysyłania żądania:', error);
+			});
+		});
+	  });
+	
 	// Funkcja do dodawania punktu
-	function addPoint(imageId, currentPoints) {
-	  const userId = getUserId();
-	  const hasUserVoted = hasUserAlreadyVoted(userId);
-  
-	  if (!hasUserVoted) {
-		var updatedPoints = currentPoints + 1;
-  
-		// Sprawdź, czy użytkownik oddał już głos
-		fetch(`${baseUrl}/Point/${imageId}/AddPoint`, {
-		  method: 'POST',
-		  headers: {
-			'Content-Type': 'application/json',
-			'Accept': 'application/json',
-		  },
-		  body: JSON.stringify({
-			points: updatedPoints,
-			userId: userId,
-		  }),
-		})
-		.then(function (response) {
-		  if (!response.ok) {
-			showMessage();
-			throw new Error('Błąd podczas dodawania punktu');
+	document.addEventListener('DOMContentLoaded', function () {
+		var baseUrl = 'https://capslo-001-site1.atempurl.com'; // Zmień na swoje potrzeby
+		var pageLoader = document.getElementById('page-loader');
+		var cardsWrapper = document.getElementById('allCardsWrapper');
+	  
+		// Funkcja do pokazywania i ukrywania loadera
+		function toggleLoader(showLoader) {
+		  pageLoader.style.display = showLoader ? 'block' : 'none';
+		}
+	  
+		// Funkcja do uzyskiwania unikalnego identyfikatora użytkownika
+		function getUserId() {
+		  var userId = localStorage.getItem('user_id');
+		  if (!userId) {
+			userId = 'user_' + Math.random().toString(36).substring(7);
+			localStorage.setItem('user_id', userId);
 		  }
-  
-		  console.log('Punkt został pomyślnie dodany');
-  
-		  markUserAsVoted(userId);
-  
-		  getAllCards();
-		  showMessageThanks();
-		})
-		.catch(function (error) {
-		  console.error('Błąd:', error.message);
-		});
-	  } else {
-		showMessage();
-	  }
-	}
-  
-	// Funkcja do pobierania wszystkich kart
-	function getAllCards() {
-	  toggleLoader(true);
-  
-	  var allCardsWrapper = document.getElementById('allCardsWrapper');
-	  allCardsWrapper.innerHTML = '<p class="text-center">Ładowanie kart świątecznych...</p>';
-  
-	  fetch(`${baseUrl}/Photo/GetAllImagesWithPoints`, {
-		method: 'GET',
-		headers: {
-		  'accept': '*/*'
+		  return userId;
 		}
-	  })
-	  .then(function (response) {
-		if (!response.ok) {
-		  throw new Error('Błąd podczas pobierania danych');
+	  
+		// Funkcja do oznaczania użytkownika jako oddającego głos
+		function markUserAsVoted(userId) {
+		  localStorage.setItem(`user_vote_${userId}`, 'true');
 		}
-		return response.json();
-	  })
-	  .then(function (data) {
-		allCardsWrapper.innerHTML = '';
-  
-		data.forEach(function (card) {
-			var cardDiv = document.createElement('div');
-			cardDiv.className = 'col-md-4 col-xl-3';
-			cardDiv.id = card.imageId;
-		
-			var cardLink = document.createElement('a');
-			cardLink.className = 'thumb-modern';
-			cardLink.setAttribute('data-lightgallery', 'item');
-			cardLink.href = `https://capslo-001-site1.atempurl.com/images/${card.fileName}`;
-		
-			var figure = document.createElement('figure');
-		
-			var img = document.createElement('img');
-			img.src = `https://capslo-001-site1.atempurl.com/images/${card.fileName}`;
-			img.alt = '';
-			img.width = 472;
-			img.height = 355;
-		
-			var caption = document.createElement('p');
-			caption.textContent = card.imageName.replace(/\.[^/.]+$/, ''); // Usunięcie rozszerzenia pliku
-		
-			caption.style.margin = '0'; // Dodanie stylu margin: 0
-		
-			var overlay = document.createElement('div');
-			overlay.className = 'thumb-modern__overlay';
-		
-			var rateDiv = document.createElement('div');
-			rateDiv.className = 'rate';
-		
-			var rateNumber = document.createElement('div');
-			rateNumber.className = 'rate_number';
-			rateNumber.textContent = card.points;
-		
-			var rateThumb = document.createElement('div');
-			rateThumb.className = 'rate_thumb';
-		
-			rateThumb.addEventListener('click', function () {
-				if (!rateThumb.classList.contains('voted')) {
+	  
+		// Funkcja do sprawdzania, czy użytkownik oddał już głos
+		function hasUserAlreadyVoted(userId) {
+		  const hasVoted = localStorage.getItem(`user_vote_${userId}`);
+		  return hasVoted === 'true';
+		}
+	  
+		// Funkcja do dodawania punktu
+		function addPoint(imageId, currentPoints) {
+		  const userId = getUserId();
+		  const hasUserVoted = hasUserAlreadyVoted(userId);
+	  
+		  if (!hasUserVoted) {
+			var updatedPoints = currentPoints + 1;
+	  
+			// Sprawdź, czy użytkownik oddał już głos
+			fetch(`${baseUrl}/Point/${imageId}/AddPoint`, {
+			  method: 'POST',
+			  headers: {
+				'Content-Type': 'application/json',
+				'Accept': 'application/json',
+			  },
+			  body: JSON.stringify({
+				points: updatedPoints,
+				userId: userId,
+			  }),
+			})
+			  .then(function (response) {
+				if (!response.ok) {
+				  showMessage();
+				  throw new Error('Błąd podczas dodawania punktu');
+				}
+	  
+				console.log('Punkt został pomyślnie dodany');
+	  
+				markUserAsVoted(userId);
+	  
+				getAllCards();
+				showMessageThanks();
+			  })
+			  .catch(function (error) {
+				console.error('Błąd:', error.message);
+			  });
+		  } else {
+			showMessage();
+		  }
+		}
+	  
+		// Funkcja do pobierania wszystkich kart
+		function getAllCards() {
+		  toggleLoader(true);
+	  
+		  var allCardsWrapper = document.getElementById('allCardsWrapper');
+		  allCardsWrapper.innerHTML = '<p class="text-center">Ładowanie kart świątecznych...</p>';
+	  
+		  fetch(`${baseUrl}/Photo/GetAllImagesWithPoints`, {
+			method: 'GET',
+			headers: {
+			  'accept': '*/*'
+			}
+		  })
+			.then(function (response) {
+			  if (!response.ok) {
+				throw new Error('Błąd podczas pobierania danych');
+			  }
+			  return response.json();
+			})
+			.then(function (data) {
+			  allCardsWrapper.innerHTML = '';
+	  
+			  data.forEach(function (card) {
+				var cardDiv = document.createElement('div');
+				cardDiv.className = 'col-md-4 col-xl-3';
+				cardDiv.id = card.imageId;
+	  
+				var cardLink = document.createElement('a');
+				cardLink.className = 'thumb-modern';
+				cardLink.setAttribute('data-lightgallery', 'item');
+				cardLink.href = `https://capslo-001-site1.atempurl.com/images/${card.fileName}`;
+	  
+				var figure = document.createElement('figure');
+	  
+				var img = document.createElement('img');
+				img.src = `https://capslo-001-site1.atempurl.com/images/${card.fileName}`;
+				img.alt = '';
+				img.width = 472;
+				img.height = 355;
+	  
+				var caption = document.createElement('p');
+				caption.textContent = card.imageName.replace(/\.[^/.]+$/, ''); // Usunięcie rozszerzenia pliku
+	  
+				caption.style.margin = '0'; // Dodanie stylu margin: 0
+	  
+				var overlay = document.createElement('div');
+				overlay.className = 'thumb-modern__overlay';
+	  
+				var rateDiv = document.createElement('div');
+				rateDiv.className = 'rate';
+	  
+				var rateNumber = document.createElement('div');
+				rateNumber.className = 'rate_number';
+				rateNumber.textContent = card.points;
+	  
+				var rateThumb = document.createElement('div');
+				rateThumb.className = 'rate_thumb';
+	  
+				rateThumb.addEventListener('click', function () {
+				  if (!rateThumb.classList.contains('voted')) {
 					addPoint(card.imageId, card.points);
 					rateThumb.classList.add('voted');
-				}
+				  }
+				});
+	  
+				var thumbsUpIcon = document.createElement('i');
+				thumbsUpIcon.className = 'fa fa-thumbs-up';
+				thumbsUpIcon.setAttribute('aria-hidden', 'true');
+	  
+				rateThumb.appendChild(thumbsUpIcon);
+	  
+				rateDiv.appendChild(rateNumber);
+				rateDiv.appendChild(rateThumb);
+	  
+				figure.appendChild(img);
+				cardLink.appendChild(figure);
+				cardLink.appendChild(overlay);
+	  
+				cardDiv.appendChild(cardLink);
+				cardDiv.appendChild(caption);
+				cardDiv.appendChild(rateDiv);
+	  
+				allCardsWrapper.appendChild(cardDiv);
+			  });
+	  
+			 // Po dodaniu kart do DOM, zainicjuj lightGallery
+			 var galleryItems = document.querySelectorAll('[data-lightgallery="group"]');
+			 if (galleryItems.length > 0) {
+			   initLightGallery(allCardsWrapper, 'twoja-dodatkowa-klasa');
+			 }
+	 
+			 // Po dodaniu kart do DOM, zainicjuj lightGalleryItem
+			 var galleryItemItems = document.querySelectorAll('[data-lightgallery="item"]');
+			 if (galleryItemItems.length > 0) {
+			   initLightGalleryItem(allCardsWrapper, 'twoja-dodatkowa-klasa');
+			 }
+	  
+			  toggleLoader(false);
+			})
+			.catch(function (error) {
+			  console.error('Błąd:', error.message);
+			  toggleLoader(false);
 			});
-		
-			var thumbsUpIcon = document.createElement('i');
-			thumbsUpIcon.className = 'fa fa-thumbs-up';
-			thumbsUpIcon.setAttribute('aria-hidden', 'true');
-		
-			rateThumb.appendChild(thumbsUpIcon);
-		
-			rateDiv.appendChild(rateNumber);
-			rateDiv.appendChild(rateThumb);
-		
-			figure.appendChild(img);
-			cardLink.appendChild(figure);
-			cardLink.appendChild(overlay);
-		
-			cardDiv.appendChild(cardLink);
-			cardDiv.appendChild(caption);
-			cardDiv.appendChild(rateDiv);
-		
-			allCardsWrapper.appendChild(cardDiv);
-		});
-		
-  
-		toggleLoader(false);
-	  })
-	  .catch(function (error) {
-		console.error('Błąd:', error.message);
-		toggleLoader(false);
+		}
+	  
+		getAllCards();
 	  });
-	}
+	//
+	
+}());
+
+
   
-	getAllCards();
-});
 
 // fetch('https://capslo-001-site1.atempurl.com/Photo/GetAllImagesWithPoints', {
 //   method: 'GET',
