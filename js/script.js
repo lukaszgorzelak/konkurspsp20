@@ -1337,12 +1337,12 @@ document.addEventListener('DOMContentLoaded', function () {
 			var cardLink = document.createElement('a');
 			cardLink.className = 'thumb-modern';
 			cardLink.setAttribute('data-lightgallery', 'item');
-			cardLink.href = 'data:image/jpeg;base64,' + card.imageData;
+			cardLink.href = `https://capslo-001-site1.atempurl.com/images/${card.fileName}`;
 		
 			var figure = document.createElement('figure');
 		
 			var img = document.createElement('img');
-			img.src = 'data:image/jpeg;base64,' + card.imageData;
+			img.src = `https://capslo-001-site1.atempurl.com/images/${card.fileName}`;
 			img.alt = '';
 			img.width = 472;
 			img.height = 355;
@@ -1353,7 +1353,7 @@ document.addEventListener('DOMContentLoaded', function () {
 			caption.style.margin = '0'; // Dodanie stylu margin: 0
 		
 			var overlay = document.createElement('div');
-			// overlay.className = 'thumb-modern__overlay';
+			overlay.className = 'thumb-modern__overlay';
 		
 			var rateDiv = document.createElement('div');
 			rateDiv.className = 'rate';
