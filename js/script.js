@@ -1168,6 +1168,23 @@ function showMessage(){
 	});
 }
 
+function showMessageThanks(){
+	// Pobierz element komunikatu
+	var votedMessageContainer = document.getElementById('thanksMessage');
+
+	// Wyświetl komunikat, jeśli użytkownik próbuje oddać drugi głos
+	votedMessageContainer.style.display = 'block';
+
+	// Pobierz aktualny odstęp górnego marginesu (margin-top) elementu komunikatu
+	var marginTop = parseInt(window.getComputedStyle(votedMessageContainer).marginTop, 10);
+
+	// Przewiń do elementu komunikatu z dodatkowym odstępem (100 pikseli) do góry
+	window.scrollTo({
+	  top: votedMessageContainer.offsetTop - marginTop - 100,
+	  behavior: 'smooth'
+	});
+}
+
 
 // Wysyłanie nowej karty
 
@@ -1280,6 +1297,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		  markUserAsVoted(userId);
   
 		  getAllCards();
+		  showMessageThanks();
 		})
 		.catch(function (error) {
 		  console.error('Błąd:', error.message);
