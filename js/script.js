@@ -1094,7 +1094,7 @@
 	// Wysyłanie nowej karty
 	
 	// Aktualizacja URL serwera
-	const baseUrl = 'http://photocontest.tryasp.net';
+	const baseUrl = 'https://photocontest.tryasp.net';
 	
 	document.addEventListener('DOMContentLoaded', function () {
 		const form = document.getElementById('sendNewCard');
@@ -1141,7 +1141,7 @@
 	
 	// Funkcja do dodawania punktu
 	document.addEventListener('DOMContentLoaded', function () {
-		var baseUrl = 'http://photocontest.tryasp.net'; // Zmień na swoje potrzeby
+		var baseUrl = 'https://photocontest.tryasp.net'; // Zmień na swoje potrzeby
 		var pageLoader = document.getElementById('page-loader');
 		var cardsWrapper = document.getElementById('allCardsWrapper');
 	  
@@ -1245,12 +1245,12 @@
 				var cardLink = document.createElement('a');
 				cardLink.className = 'thumb-modern';
 				cardLink.setAttribute('data-lightgallery', 'item');
-				cardLink.href = `http://photocontest.tryasp.net/images/${card.fileName}`;
+				cardLink.href = `https://photocontest.tryasp.net/images/${card.fileName}`;
 	  
 				var figure = document.createElement('figure');
 	  
 				var img = document.createElement('img');
-				img.src = `http://photocontest.tryasp.net/images/${card.fileName}`;
+				img.src = `https://photocontest.tryasp.net/images/${card.fileName}`;
 				img.alt = '';
 				img.width = 472;
 				img.height = 355;

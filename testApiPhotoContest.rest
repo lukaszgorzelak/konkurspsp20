@@ -1,4 +1,4 @@
-@baseUrl = http://photocontest.tryasp.net
+@baseUrl = https://photocontest.tryasp.net
 
 ###
 
